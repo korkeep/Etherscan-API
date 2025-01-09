@@ -1,5 +1,5 @@
 ## scam-coin-tracer 🪙
-Trace scam-coin Developers in the DeFi environment 😈
+Trace Scam-Coin Developers in the DeFi Environment 😈
 
 ### Requirements 📝
 ```bash
