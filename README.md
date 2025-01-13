@@ -1,4 +1,4 @@
-## Ethereum-coin-tracer 🪙
+## ethereum-tracer 🪙
 Provide Reports Analyzing the Malicious Activity of Ethereum Coin Creators 📈
 
 ---
