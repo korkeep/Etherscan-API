@@ -1,12 +1,12 @@
-# Etherscan API for Tracking Malicious Token Developers 🪙
+# Etherscan API for Tracking Malicious Developers 🪙
 
 ## Overview
 
-The Etherscan API provides a wide range of data that can be leveraged to track and identify **malicious token developers**. This includes data related to transactions, token transfers, contract interactions, and account activities. By analyzing suspicious patterns, developers can identify addresses involved in malicious activities and track them effectively.
+The Etherscan API provides a wide range of data that can be leveraged to trace and identify **malicious token developers**. This includes data related to transactions, token transfers, contract interactions, and account activities. Through this project, we can identify addresses involved in malicious activities and track them effectively.
 
 ## Tracking Malicious Token Developers
 
-To track malicious token developers, you can focus on detecting abnormal or suspicious patterns:
+To track malicious token developers, we focus on detecting abnormal or suspicious patterns:
 
 1. **Abnormal Token Issuance and Transfers**:
     - **Excessive token issuance**: Track developers who rapidly issue large quantities of tokens.
@@ -31,7 +31,7 @@ To track malicious token developers, you can focus on detecting abnormal or susp
 
     Use **`action=tokenholder`** to get the list of token holders and analyze the distribution patterns.
 
-## Example Usage
+## Example Usage for Etherscan API
 
 ### 1. Fetch ERC-20/ERC-721 Token Transfer History for a Specific Address
 
@@ -53,7 +53,7 @@ def get_token_nft_tx_history(address, api_key):
         print(f"Request failed with status code {response.status_code}")
 
 # Example usage
-get_token_nft_tx_history('0xYourAddressHere', 'YourApiKeyHere')
+get_token_nft_tx_history(TOKEN_ADDRESS, API_KEY)
 ```
 
 ### 2. Fetch ERC-20 Token Transfer History for a Specific Address
@@ -76,7 +76,7 @@ def get_token_tx_history(address, api_key):
         print(f"Request failed with status code {response.status_code}")
 
 # Example usage
-get_token_tx_history('0xYourAddressHere', 'YourApiKeyHere')
+get_token_tx_history(TOKEN_ADDRESS, API_KEY)
 ```
 
 ### 3. Fetch the Source Code of a Smart Contract
@@ -98,7 +98,7 @@ def get_contract_source_code(contract_address, api_key):
         print(f"Request failed with status code {response.status_code}")
 
 # Example usage
-get_contract_source_code('0xYourContractAddressHere', 'YourApiKeyHere')
+get_contract_source_code(SMART_CONTRACT_ADDRESS, API_KEY)
 ```
 
 ### 4. Fetch the ABI of a Smart Contract
@@ -119,7 +119,7 @@ def get_contract_abi(contract_address, api_key):
         print(f"Request failed with status code {response.status_code}")
 
 # Example usage
-get_contract_abi('0xYourContractAddressHere', 'YourApiKeyHere')
+get_contract_abi(SMART_CONTRACT_ADDRESS, API_KEY)
 ```
 
 ### 5. Fetch a List of Transactions for a Specific Address
@@ -141,7 +141,7 @@ def get_transaction_list(address, api_key):
         print(f"Request failed with status code {response.status_code}")
 
 # Example usage
-get_transaction_list('0xYourAddressHere', 'YourApiKeyHere')
+get_transaction_list(TOKEN_ADDRESS, API_KEY)
 ```
 
 ### 6. Fetch Token Holders for a Specific ERC-20 Token
@@ -163,5 +163,5 @@ def get_token_holders(contract_address, api_key):
         print(f"Request failed with status code {response.status_code}")
 
 # Example usage
-get_token_holders('0xYourTokenContractAddressHere', 'YourApiKeyHere')
+get_token_holders(TOKEN_CONTRACT_ADDRESS, API_KEY)
 ```
