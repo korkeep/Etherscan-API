@@ -1,42 +1,167 @@
-## ethereum-tracer 🪙
-Provide Reports Analyzing the Malicious Activity of Ethereum Coin Creators 📈
+# Etherscan API for Tracking Malicious Token Developers 🪙
 
----
+## Overview
 
-### Features Provided by Etherscan API
+The Etherscan API provides a wide range of data that can be leveraged to track and identify **malicious token developers**. This includes data related to transactions, token transfers, contract interactions, and account activities. By analyzing suspicious patterns, developers can identify addresses involved in malicious activities and track them effectively.
 
-- **Transaction Details**: Information about specific transactions, including transaction hash, status, gas used, and value transferred.
-  
-- **Address Information**: Data about Ethereum wallet addresses, including balance, transaction history, and token holdings.
-  
-- **Block Details**: Information about specific blocks, such as block number, block hash, miner, and timestamp.
-  
-- **Token Information**: Details about ERC-20 token transactions, transfers, and contract information.
-  
-- **Smart Contract Transactions**: Data on smart contract transactions.
-  
-- **Gas Tracker**: Real-time information on gas prices, gas limits, and recommended gas prices for transactions.
-  
-- **Token Supply**: Total supply of specific ERC-20 tokens or other custom tokens.
-  
-- **Contract Source Code**: Access to verified smart contract source code deployed on the Ethereum network.
-  
-- **Address Token Balances**: Information about ERC-20 token balances for a specific address.
+## Tracking Malicious Token Developers
 
----
+To track malicious token developers, you can focus on detecting abnormal or suspicious patterns:
 
-### Dataset Explanation
+1. **Abnormal Token Issuance and Transfers**:
+    - **Excessive token issuance**: Track developers who rapidly issue large quantities of tokens.
+    - **Suspicious transfers**: Detect token transfers to or from suspicious addresses, which might indicate fraud or market manipulation.
 
-| **No.** | **Feature**  | **Explanation**                              |
-|:-------:|:------------:|:---------------------------------------------:|
-| 1       | **id**       | ERC-20 Token Address                         |
-| 2       | **creator**  | ERC-20 Token Creator                         |
+    Use **`action=tokennfttx`** or **`action=tokentx`** to track token transfers and identify abnormal activities.
 
----
+2. **Smart Contract ABI and Source Code Analysis**:
+    - **Malicious contract code**: Identify smart contracts with functions that might exploit users or steal funds.
+    - **Risky contracts**: Contracts that encourage users to deposit large amounts of funds with little transparency or return.
 
-### Requirements
+    Use **`action=getsourcecode`** or **`action=getabi`** to analyze the source code and ABI of the contracts and look for suspicious code.
 
-To install dependencies, run:
+3. **Transaction Patterns**:
+    - **Excessive transactions**: Track addresses that are making numerous transactions in a short period.
+    - **Suspicious transaction activity**: Identify addresses making abnormal token transfers or engaging in token pumping and dumping activities.
 
-```bash
-pip install -r requirements.txt
+    Use **`action=txlist`** to check transaction history for abnormal behavior.
+
+4. **Token Holder List**:
+    - **Non-transparent holder structure**: Track token developers who are distributing large quantities of tokens to a few specific addresses, potentially leading to market manipulation.
+
+    Use **`action=tokenholder`** to get the list of token holders and analyze the distribution patterns.
+
+## Example Usage
+
+### 1. Fetch ERC-20/ERC-721 Token Transfer History for a Specific Address
+
+```python
+import requests
+
+def get_token_nft_tx_history(address, api_key):
+    url = f'https://api.etherscan.io/api?module=account&action=tokennfttx&address={address}&apikey={api_key}'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        if data['status'] == '1':
+            transactions = data['result']
+            for tx in transactions:
+                print(f"Token Name: {tx['tokenName']} | From: {tx['from']} | To: {tx['to']} | Token ID: {tx['tokenID']} | Block: {tx['blockNumber']} | Timestamp: {tx['timeStamp']}")
+        else:
+            print(f"Error: {data['message']}")
+    else:
+        print(f"Request failed with status code {response.status_code}")
+
+# Example usage
+get_token_nft_tx_history('0xYourAddressHere', 'YourApiKeyHere')
+```
+
+### 2. Fetch ERC-20 Token Transfer History for a Specific Address
+
+```python
+import requests
+
+def get_token_tx_history(address, api_key):
+    url = f'https://api.etherscan.io/api?module=account&action=tokentx&address={address}&apikey={api_key}'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        if data['status'] == '1':
+            transactions = data['result']
+            for tx in transactions:
+                print(f"Token Name: {tx['tokenName']} | Token Symbol: {tx['tokenSymbol']} | From: {tx['from']} | To: {tx['to']} | Value: {tx['value']} | Block: {tx['blockNumber']} | Timestamp: {tx['timeStamp']}")
+        else:
+            print(f"Error: {data['message']}")
+    else:
+        print(f"Request failed with status code {response.status_code}")
+
+# Example usage
+get_token_tx_history('0xYourAddressHere', 'YourApiKeyHere')
+```
+
+### 3. Fetch the Source Code of a Smart Contract
+
+```python
+import requests
+
+def get_contract_source_code(contract_address, api_key):
+    url = f'https://api.etherscan.io/api?module=contract&action=getsourcecode&address={contract_address}&apikey={api_key}'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        if data['status'] == '1':
+            contract_source_code = data['result'][0]['SourceCode']
+            print(f"Source Code: {contract_source_code}")
+        else:
+            print(f"Error: {data['message']}")
+    else:
+        print(f"Request failed with status code {response.status_code}")
+
+# Example usage
+get_contract_source_code('0xYourContractAddressHere', 'YourApiKeyHere')
+```
+
+### 4. Fetch the ABI of a Smart Contract
+```python
+import requests
+
+def get_contract_abi(contract_address, api_key):
+    url = f'https://api.etherscan.io/api?module=contract&action=getabi&address={contract_address}&apikey={api_key}'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        if data['status'] == '1':
+            abi = data['result']
+            print(f"ABI: {abi}")
+        else:
+            print(f"Error: {data['message']}")
+    else:
+        print(f"Request failed with status code {response.status_code}")
+
+# Example usage
+get_contract_abi('0xYourContractAddressHere', 'YourApiKeyHere')
+```
+
+### 5. Fetch a List of Transactions for a Specific Address
+```python
+import requests
+
+def get_transaction_list(address, api_key):
+    url = f'https://api.etherscan.io/api?module=account&action=txlist&address={address}&apikey={api_key}'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        if data['status'] == '1':
+            transactions = data['result']
+            for tx in transactions:
+                print(f"Tx Hash: {tx['hash']} | From: {tx['from']} | To: {tx['to']} | Value: {tx['value']} | Block: {tx['blockNumber']} | Timestamp: {tx['timeStamp']}")
+        else:
+            print(f"Error: {data['message']}")
+    else:
+        print(f"Request failed with status code {response.status_code}")
+
+# Example usage
+get_transaction_list('0xYourAddressHere', 'YourApiKeyHere')
+```
+
+### 6. Fetch Token Holders for a Specific ERC-20 Token
+```python
+import requests
+
+def get_token_holders(contract_address, api_key):
+    url = f'https://api.etherscan.io/api?module=token&action=tokenholder&contractaddress={contract_address}&apikey={api_key}'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        if data['status'] == '1':
+            holders = data['result']
+            for holder in holders:
+                print(f"Address: {holder['address']} | Balance: {holder['balance']}")
+        else:
+            print(f"Error: {data['message']}")
+    else:
+        print(f"Request failed with status code {response.status_code}")
+
+# Example usage
+get_token_holders('0xYourTokenContractAddressHere', 'YourApiKeyHere')
+```
