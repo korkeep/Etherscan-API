@@ -3,10 +3,10 @@
 ## Table of Contents
 1. [Overview](#overview)
 2. [Key Features](#key-features)
-   - [analyze_token.py: Abnormal Token Issuance and Transfers](#1-analyzetokenpy-abnormal-token-issuance-and-transfers)
-   - [analyze_contract.py: Smart Contract ABI and Source Code Analysis](#2-analyzecontractpy-smart-contract-abi-and-source-code-analysis)
-   - [analyze_transaction.py: Transaction Patterns](#3-analyzetransactionpy-transaction-patterns)
-   - [analyze_holder.py: Token Holder List](#4-analyzeholderpy-token-holder-list)
+   - [analyze_token.py: Abnormal Token Issuance and Transfers](https://github.com/korkeep/Etherscan-API/blob/main/analyze_token.py)
+   - [analyze_contract.py: Smart Contract ABI and Source Code Analysis](https://github.com/korkeep/Etherscan-API/blob/main/analyze_contract.py)
+   - [analyze_transaction.py: Transaction Patterns](https://github.com/korkeep/Etherscan-API/blob/main/analyze_transaction.py)
+   - [analyze_holder.py: Token Holder List](https://github.com/korkeep/Etherscan-API/blob/main/analyze_holder.py)
 3. [Setup & Run](#setup--run)
 4. [Notes](#notes)
 
@@ -80,10 +80,10 @@ ETHERSCAN_API_KEY=your_api_key_here
 
 ### 2. Install Necessary Libraries
 
-You will need to install the following Python libraries:
+Instead of installing libraries individually, you can save the required libraries in a `requirements.txt` file:
 
 ```bash
-pip install requests python-dotenv
+pip install -r requirements.txt
 ```
 
 ### 3. Run the Script
