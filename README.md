@@ -1,32 +1,102 @@
 # Etherscan API for Tracking Malicious Developers 🪙
 
+## Table of Contents
+1. [Overview](#overview)
+2. [Key Features](#key-features)
+   - [analyze_token.py: Abnormal Token Issuance and Transfers](#1-analyzetokenpy-abnormal-token-issuance-and-transfers)
+   - [analyze_contract.py: Smart Contract ABI and Source Code Analysis](#2-analyzecontractpy-smart-contract-abi-and-source-code-analysis)
+   - [analyze_transaction.py: Transaction Patterns](#3-analyzetransactionpy-transaction-patterns)
+   - [analyze_holder.py: Token Holder List](#4-analyzeholderpy-token-holder-list)
+3. [Setup & Run](#setup--run)
+4. [Notes](#notes)
+
 ## Overview
 
 The Etherscan API provides a wide range of data that can be leveraged to trace and identify **malicious token developers**. This includes data related to transactions, token transfers, contract interactions, and account activities. Through this project, we can identify addresses involved in malicious activities and track them effectively.
 
-## Tracking Malicious Token Developers
+## Key Features
 
-To track malicious token developers, we focus on detecting abnormal or suspicious patterns:
+### 1. **`analyze_token.py`: Abnormal Token Issuance and Transfers**
+Track excessive token issuance or suspicious transfers.
 
-1. **Abnormal Token Issuance and Transfers**: **`analyze_token.py`**
-    - **Excessive token issuance**: Track developers who rapidly issue large quantities of tokens.
-    - **Suspicious transfers**: Detect token transfers to or from suspicious addresses, which might indicate fraud or market manipulation.
+- **Usage**: Use **`action=tokennfttx`** or **`action=tokentx`** to track token transfers.
+- **Key Focus**: Identify suspicious behavior, such as high-frequency transfers or large transactions.
 
-    Use **`action=tokennfttx`** or **`action=tokentx`** to track token transfers and identify abnormal activities.
+```python
+# Example: Tracking token transfers
+def get_token_transfers(address, action='tokentx'):
+    # API call to fetch token transfer data
+    pass
+```
 
-2. **Smart Contract ABI and Source Code Analysis**: **`analyze_contract.py`**
-    - **Malicious contract code**: Identify smart contracts with functions that might exploit users or steal funds.
-    - **Risky contracts**: Contracts that encourage users to deposit large amounts of funds with little transparency or return.
+### 2. **`analyze_contract.py`: Smart Contract ABI and Source Code Analysis**
+Analyze smart contracts for suspicious or malicious code.
 
-    Use **`action=getsourcecode`** or **`action=getabi`** to analyze the source code and ABI of the contracts and look for suspicious code.
+- **Usage**: Use **`action=getabi`** or **`action=getsourcecode`** to fetch ABI or source code.
+- **Key Focus**: Look for risky contract functions that may harm users.
 
-3. **Transaction Patterns**: **`analyze_transaction.py`**
-    - **Excessive transactions**: Track addresses that are making numerous transactions in a short period.
-    - **Suspicious transaction activity**: Identify addresses making abnormal token transfers or engaging in token pumping and dumping activities.
+```python
+# Example: Fetching contract ABI
+def get_contract_abi(address):
+    # API call to fetch contract ABI
+    pass
+```
 
-    Use **`action=txlist`** to check transaction history for abnormal behavior.
+### 3. **`analyze_transaction.py`: Transaction Patterns**
+Identify abnormal transaction patterns, including high-frequency and high-value transactions.
 
-4. **Token Holder List**: **`analyze_holder.py`**
-    - **Non-transparent holder structure**: Track token developers who are distributing large quantities of tokens to a few specific addresses, potentially leading to market manipulation.
+- **Usage**: Use **`action=txlist`**  to retrieve transaction history.
+- **Key Focus**: Detect suspicious behavior, like token pumping or frequent transfers.
 
-    Use **`action=tokenholder`** to get the list of token holders and analyze the distribution patterns.
+```python
+# Example: Analyzing transaction history
+def get_transaction_history(address):
+    # API call to fetch transaction data
+    pass
+```
+
+### 4. **`analyze_holder.py`: Token Holder List**
+Analyze the distribution of token holders to identify potential market manipulation.
+
+- **Usage**: Use **`action=tokenholder`**  to retrieve token holder information.
+- **Key Focus**: Identify centralized holder structures and large token concentrations.
+
+```python
+# Example: Analyzing token holders
+def get_token_holder_list(token_address):
+    # API call to fetch token holder data
+    pass
+```
+
+## Setup & Run
+
+### 1. Set Up the Environment
+
+Before using any of the features, ensure you have your Etherscan API key set up. Store it securely in a `.env` file:
+
+```text
+ETHERSCAN_API_KEY=your_api_key_here
+```
+
+### 2. Install Necessary Libraries
+
+You will need to install the following Python libraries:
+
+```bash
+pip install requests python-dotenv
+```
+
+### 3. Run the Script
+
+Run the corresponding script to fetch and analyze the relevant data:
+
+```bash
+python analyze_[NAME].py
+```
+> **Note**: Replace `[NAME]` with the specific script name, such as `token`, `contract`, `transaction`, or `holder`.
+
+
+## Notes
+- Replace `your_api_key_here` with your actual Etherscan API key.
+- Refer to the respective Python script (`analyze_token.py`, `analyze_contract.py`, etc.) for full implementations.
+- Ensure you handle API rate limits and errors appropriately for optimal usage.
